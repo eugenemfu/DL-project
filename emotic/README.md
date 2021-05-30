@@ -14,12 +14,12 @@ Argument | Description
 |**holdout**| Part of dataset you are intended to label. Available values are: `train`, `val`, `test`.|
 
 Output files: `train.csv`, `val.csv`, `test.csv` files that will be created in the `Annotations.mat` parent directory. Labeled
-csv files can be found in the [repository dir](https://github.com/eugenemfu/DL-project/tree/main/emotic/labeled_datset). 
+csv files can be found in the [repository dir](https://github.com/eugenemfu/DL-project/tree/main/emotic/resources/labeled_datset). 
 
 ### Step-2
 Each image has 1 or 2 emotions correspond to it. To build `multilabel` classification we will need one-hot-encoded labels
-that can be found in the [repository dir](https://github.com/eugenemfu/DL-project/tree/main/emotic/encoded_labels). Each image has
-27 target classes: 26 emotions and one `No emotion` class added to substitute `nan` values. Keys to the emotion codes can be found [here](https://github.com/eugenemfu/DL-project/blob/main/emotic/encoded_labels/emotion_keys.csv).
+that can be found in the [repository dir](https://github.com/eugenemfu/DL-project/tree/main/emotic/resources/encoded_labels). Each image has
+27 target classes: 26 emotions and one `No emotion` class added to substitute `nan` values. Keys to the emotion codes can be found [here](https://github.com/eugenemfu/DL-project/blob/main/emotic/resources/encoded_labels/emotion_keys.csv).
 
 
 ### Step-3
