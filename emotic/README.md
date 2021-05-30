@@ -23,7 +23,7 @@ that can be found in the [repository dir](https://github.com/eugenemfu/DL-projec
 
 
 ### Step-3
-To group images by `train`, `val` and `test` holdout images – create `output_folder` and run 
+To group images by `train`, `val` and `test` – create `output_folder` and run 
 `cp -R dataset_folder/. output_folder/ ` where `dataset_folder` correspond to the image folder [emotic.zip]('https://hse-ml.s3-eu-west-1.amazonaws.com/emotic.zip).
 
 When all images from emotic dataset are in the `output_folder` run [group_by_omages.py](https://github.com/eugenemfu/DL-project/blob/main/emotic/preprocessing/group_by_images.py) script from the command line with the following arguments:
