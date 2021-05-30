@@ -22,7 +22,7 @@ that can be found in the [repository dir](https://github.com/eugenemfu/DL-projec
 27 target classes: 26 emotions and one `No emotion` class added to substitute `nan` values. Keys to the emotion codes can be found [here](https://github.com/eugenemfu/DL-project/blob/main/emotic/encoded_labels/emotion_keys.csv).
 
 
-###Step-3
+### Step-3
 To group images by `train`, `val` and `test` holdout images – create `output_folder` and run 
 `cp -R dataset_folder/. output_folder/ ` where `dataset_folder` correspond to the image folder [emotic.zip]('https://hse-ml.s3-eu-west-1.amazonaws.com/emotic.zip).
 
