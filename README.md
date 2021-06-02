@@ -26,7 +26,7 @@ The task is multilabel classification. Each image has 1 or 2 corresponded emotio
 # How to preprocess dataset
 
 1. Fill the form to access [dataset](https://docs.google.com/forms/d/e/1FAIpQLScXwxhEZu7RpHwgiRqVfb09GzHSSyIm64hJQMgHSLm75ltsFQ/viewform). 
-   Download dataset and put `emotic` folder in the root of the project with `Annotation.py` file.
+   Download dataset and put `emotic` folder in the root of the project and place `Annotation.mat` file in it.
    
 2. There are two possible options:
 
@@ -36,9 +36,11 @@ The task is multilabel classification. Each image has 1 or 2 corresponded emotio
    
    `python3 -m preprocessing.label_dataset [local_path_to_the_repository]/emotic/Annotations.mat`
 
-	After running the script 4 files will be created in the `emotic` folder: `emotion_keys.csv`, `test.csv`, `val.csv`, `train.csv`.
+	After running the script 4 files will be created in the `labels` folder: `emotion_keys.csv`, `test.csv`, `val.csv`, `train.csv`.
 
    - Access labeled files and emotion keys from [repository directory](https://github.com/eugenemfu/DL-project/tree/main/labels).
+   
+3. Run `preprocessing/resize_images.py` script from the command line in the root. This will create folder `emotic_clean_cropped` containing all images together resized and cropped to square 400x400.
 	
 # To Do
 
