@@ -34,7 +34,7 @@ The task is multilabel classification. Each image has 1 or 2 corresponded emotio
 
    Command to run from the repository root: 
    
-   `python3 -m preprocessing.label_dataset [path_to_the_repository]/emotic/Annotations.mat`
+   `python3 -m preprocessing.label_dataset [local_path_to_the_repository]/emotic/Annotations.mat`
 
 	After running the script 4 files will be created in the `emotic` folder: `emotion_keys.csv`, `test.csv`, `val.csv`, `train.csv`.
 
