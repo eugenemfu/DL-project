@@ -2,11 +2,9 @@ import argparse
 import scipy.io
 import pandas as pd
 from pathlib import Path
-import numpy as np
 import os
 
 from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import MultiLabelBinarizer
 
 
 def configure_arguments(parser: argparse.ArgumentParser) -> None:
@@ -26,54 +24,32 @@ def main(data_path: str):
     
     for holdout in ['train', 'val', 'test']:
         mat = scipy.io.loadmat(data_path)
-        image_names, first_emotion, second_emotion = [], [], []
+        image_names, first_emotion = [], []
         for image in range(len(mat[holdout][0])):
             image_names.append(mat[holdout][0][image][0][0])
             first_emotion.append(mat[holdout][0][image][4][0][0][1][0][0][0][0][0][0])
-            try:
-                second_emotion.append(mat[holdout][0][image][4][0][0][1][0][0][0][0][1][0])
-            except IndexError:
-                # not all samples have 2 emotions in dataset
-                second_emotion.append(None)
+
         df = pd.DataFrame(
             {"id": image_names,
-             "emotion_1": first_emotion,
-             "emotion_2": second_emotion,
+             "emotion": first_emotion
              }
         )
 
-        df.fillna('No emotion', inplace=True)
-
-        emotion_1_unique = df['emotion_1'].unique()
-        emotion_2_unique = df['emotion_2'].unique()
-
-        emotion_unique = list(emotion_1_unique)
-        for emotion in emotion_2_unique:
-            emotion_unique.append(emotion)
-        emotion_unique = np.unique(emotion_unique)
+        emotion_unique = list(df['emotion'].unique())
 
         le = LabelEncoder()
         le.fit(emotion_unique)
 
-        encoded_emotion_1 = le.transform(df['emotion_1'])
-        encoded_emotion_2 = le.transform(df['emotion_2'])
+        encoded_emotion = le.transform(df['emotion'])
 
-        encoded_emotion = []
-        for em1, em2 in zip(encoded_emotion_1, encoded_emotion_2):
-            encoded_emotion.append([em1, em2])
-
-        mlb = MultiLabelBinarizer()
-        encoded_targets = mlb.fit_transform(encoded_emotion)
-        ids = df['id']
-        targets = pd.DataFrame(encoded_targets)
-        targets.insert(0, "id", ids.values, True)
+        df.insert(2, "emotion_id", encoded_emotion, True)
 
         output_path = Path('labels') / f'{holdout}.csv'
-        targets.to_csv(output_path, index=False)
+        df.to_csv(output_path, index=False)
 
     # save emotion-keys
     df = pd.DataFrame(
-        {"id": range(emotion_unique.shape[0]),
+        {"id": range(len(emotion_unique)),
          "emotion": le.classes_
          }
     )
