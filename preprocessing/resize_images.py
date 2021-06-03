@@ -5,7 +5,7 @@ import cv2
 import typing
 
 
-SIZE = 400
+SIZE = 128
 
 
 def reshape_and_save(source_path: str, output_path: str):
