@@ -3,6 +3,7 @@ import scipy.io
 import pandas as pd
 from pathlib import Path
 import numpy as np
+import os
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MultiLabelBinarizer
@@ -16,6 +17,13 @@ def configure_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def main(data_path: str):
+    
+    try:
+        os.mkdir('labels')
+    # pass if directory a;ready exists
+    except OSError:
+        pass
+    
     for holdout in ['train', 'val', 'test']:
         mat = scipy.io.loadmat(data_path)
         image_names, first_emotion, second_emotion = [], [], []
@@ -60,7 +68,7 @@ def main(data_path: str):
         targets = pd.DataFrame(encoded_targets)
         targets.insert(0, "id", ids.values, True)
 
-        output_path = Path(data_path).parent / f'{holdout}.csv'
+        output_path = Path('labels') / f'{holdout}.csv'
         targets.to_csv(output_path, index=False)
 
     # save emotion-keys
@@ -69,7 +77,7 @@ def main(data_path: str):
          "emotion": le.classes_
          }
     )
-    df.to_csv(Path(data_path).parent / 'emotion_keys.csv', index=False)
+    df.to_csv(Path('labels') / 'emotion_keys.csv', index=False)
 
 
 if __name__ == '__main__':
