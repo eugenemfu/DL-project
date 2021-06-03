@@ -6,7 +6,7 @@ __Theme__: Image augmentation using image generation with GAN to improve multicl
 
 __Dataset__: [EMOTIC](https://github.com/rkosti/emotic) consists of 23,554 images. 
 
-The task is multilabel classification. Each image has 1 or 2 corresponded emotion. Our hypothesis is that accuracy of a simple CNN model for image classification could be improved by generating more images and classes equalization.
+The task is multiclassification. Our hypothesis is that accuracy of a simple CNN model for image classification could be improved by generating more images and classes equalization.
 
 ### Plan: 
 
