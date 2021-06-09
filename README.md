@@ -4,7 +4,7 @@ __Team members__: Daria Diatlova, Eugene Sakhno
 
 __Theme__: Image augmentation using image generation with GAN to improve multiclass emotion classification accuracy on images of minor classes and overall testing dataset.
 
-__Dataset__: [EMOTIC](https://github.com/rkosti/emotic) consists of 23,554 images. 
+__Dataset__: [FER13](https://datarepository.wolframcloud.com/resources/FER-2013) consists of 35,886 images. 
 
 The task is multiclassification. Our hypothesis is that accuracy of a simple CNN model for image classification could be improved by generating more images and classes equalization.
 
@@ -16,38 +16,14 @@ The task is multiclassification. Our hypothesis is that accuracy of a simple CNN
 
 	- state-of-art GAN models architecture that are used for generating face images.
 
-2. Implement a simple CNN model, train it on the EMOTIC dataset and analyze the results.
+2. Implement a simple CNN model, train and analyze the results.
 
-3. Augment data using GAN, analyze the results of CNN model trained on augmented EMOTIC dataset. 
+3. Augment data using GAN, analyze the results of CNN model trained on augmented dataset. 
 
 4. Analyze how parameters and architecture of GAN affect CNN model accuracy. 
 
 
 # How to preprocess dataset
 
-1. Fill the form to access [dataset](https://docs.google.com/forms/d/e/1FAIpQLScXwxhEZu7RpHwgiRqVfb09GzHSSyIm64hJQMgHSLm75ltsFQ/viewform). 
-   Download dataset and put `emotic` folder in the root of the project and place `Annotation.mat` file in it.
-   
-2. There are two possible options:
+1. Download `zip` file ...
 
-   -  Run `label_dataset.py` script from the command line.
-
-   Command to run from the repository root: 
-   
-   `python3 -m preprocessing.label_dataset [local_path_to_the_repository]/emotic/Annotations.mat`
-
-	After running the script 4 files will be created in the `labels` folder: `emotion_keys.csv`, `test.csv`, `val.csv`, `train.csv`.
-
-   - Access labeled files and emotion keys from [repository directory](https://github.com/eugenemfu/DL-project/tree/main/labels).
-   
-3. Run `preprocessing/resize_images.py` script from the command line in the root. This will create folder `emotic_clean_cropped` containing all images together resized and cropped to square 400x400.
-	
-# To Do
-
-- Debug training on cuda
-
-- Augmentation
-
-- Reproduce same training on augmented data
-
-- ...
