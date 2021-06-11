@@ -25,15 +25,9 @@ The task is multiclassification. Our hypothesis is that accuracy of a simple CNN
 #Data overview
 There are 7 image classes in the dataset that are encoded as following:
 
-**Emotion** | **Id**
----|---
-angry | 0
-disgust | 1
-fear | 2
-happy | 3
-neutral | 4
-sad | 5
-surprise | 6
+**Emotion** | Angry | Disgust | Fear | Happy | Neutral | Sad | Surprise
+---|---|---|---|---|---|---|---
+Id | 0| 1 | 2 | 3 | 4 | 5 | 6 
 
 Classes are unbalanced and distributed as following:
 
