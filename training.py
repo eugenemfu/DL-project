@@ -7,27 +7,16 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision.io import read_image
 from torchvision import models
 from sklearn.model_selection import train_test_split
+from imagedataset import ImageDataset
+import time
+
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
-class ImageDataset(Dataset):
-    def __init__(self, annotations_dataframe):
-        self.img_labels = annotations_dataframe
-
-    def __len__(self):
-        return len(self.img_labels)
-
-    def __getitem__(self, idx):
-        image = read_image(self.img_labels.iloc[idx, 0]).type(torch.float32).to(device)
-        labels = torch.tensor(self.img_labels.iloc[idx, 1]).to(device)
-        sample = {"image": image, "labels": labels}
-        return sample
-
-
 def evaluate(model, criterion, epoch, train_data, val_data, num_batches=None):
     model.eval()
-    print(f'\repoch: {epoch}/{NUM_EPOCHS}, evaluating model...', end='')
+    print(f'\rEpoch: {epoch}/{NUM_EPOCHS},\tevaluating model...', end='')
     loss_tv = []
     acc_tv = []
     for data in [train_data, val_data]:
@@ -48,11 +37,11 @@ def evaluate(model, criterion, epoch, train_data, val_data, num_batches=None):
                 break
         loss_tv.append(np.mean(losses))
         acc_tv.append(np.mean(accs))
-    print(f'\repoch: {epoch}/{NUM_EPOCHS}',
-          f'train loss: {("%.5f"%loss_tv[0])}',
-          f'val loss: {"%.5f"%loss_tv[1]}',
-          f'train acc: {"%.5f"%acc_tv[0]}',
-          f'val acc: {"%.5f"%acc_tv[1]}')
+    print(f'\rEpoch: {epoch}/{NUM_EPOCHS},\t'
+          f'train loss: {("%.5f"%loss_tv[0])},  '
+          f'val loss: {"%.5f"%loss_tv[1]},  '
+          f'train acc: {"%.5f"%acc_tv[0]},  '
+          f'val acc: {"%.5f"%acc_tv[1]}', end='')
     model.train()
     return *loss_tv, *acc_tv
 
@@ -92,9 +81,9 @@ model2[0].conv1 = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3
 
 model = model1
 
-print(sum(p.numel() for p in model.parameters() if p.requires_grad))
+print('Number of parameters:', sum(p.numel() for p in model.parameters() if p.requires_grad))
 
-optimizer = torch.optim.Adam(model.parameters(), lr=1e-5, weight_decay=1e-6)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-6)
 criterion = nn.CrossEntropyLoss().to(device)
 
 
@@ -103,7 +92,7 @@ BATCH_SIZE = 64
 NUM_EPOCHS = 100
 EVAL_BATCHES = 100
 EVAL_STEP = 1
-SAVE_MODEL_IF_LOSS_IS_LESS_THAN = 1
+SAVE_MODEL_IF_LOSS_IS_LESS_THAN = 10
 
 df = pd.read_csv('data_resized/train.csv')
 train_df, val_df = train_test_split(df, test_size=VAL_SIZE)
@@ -117,14 +106,14 @@ num_batches = len(train_data) // BATCH_SIZE
 evaluate(model, criterion, 0, train_dataloader, val_dataloader, EVAL_BATCHES)
 
 for epoch in range(1, NUM_EPOCHS + 1):
-    print(f'\repoch: {epoch}/{NUM_EPOCHS}, training...', end='')
+    print(f'\nEpoch: {epoch}/{NUM_EPOCHS},\ttraining...', end='')
     losses = []
     i = 0
     best_loss = SAVE_MODEL_IF_LOSS_IS_LESS_THAN
 
     for batch in train_dataloader:
         i += 1
-        print(f'\repoch: {epoch}/{NUM_EPOCHS}, batch: {i}/{num_batches}...', end='')
+        print(f'\rEpoch: {epoch}/{NUM_EPOCHS},\tbatch: {i}/{num_batches}...', end='')
         inputs = batch['image']
         labels = batch['labels']
         outputs = model(inputs)
@@ -138,6 +127,7 @@ for epoch in range(1, NUM_EPOCHS + 1):
         val_loss = evaluate(model, criterion, epoch, train_dataloader, val_dataloader, EVAL_BATCHES)[0]
         if val_loss < best_loss:
             best_loss = val_loss
-            torch.save(model, f'cnn.pkl')
-
+            name = f'model{int(time.time())}.pkl'
+            torch.save(model, 'models/' + name)
+            print(f',  saved as {name}', end='')
 
