@@ -2,3 +2,7 @@ pandas
 numpy
 scikit-learn
 torch
+pandas==1.0.1
+numpy==1.18.1
+scikit-learn==0.22.1
+opencv-python

@@ -29,11 +29,17 @@ There are 7 image classes in the dataset that are encoded as following:
 ---|---|---|---|---|---|---|---
 Id | 0| 1 | 2 | 3 | 4 | 5 | 6 
 
+![Angry](plot_images/emotion_samples/0.png)
+![Disgust](plot_images/emotion_samples/1.png)
+![Fear](plot_images/emotion_samples/2.png)
+![Happy](plot_images/emotion_samples/3.png)
+![Neutral](plot_images/emotion_samples/4.png)
+![Sad](plot_images/emotion_samples/5.png)
+![Surprise](plot_images/emotion_samples/6.png)
+
 Classes are unbalanced and distributed as following:
 
 ![alt text](plot_images/emotion.png)
-
-
 
 # How to preprocess dataset
 1. Download [`data.zip`](https://www.kaggle.com/msambare/fer2013?select=test), unarchive it and put all content in `data`
