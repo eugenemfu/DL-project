@@ -9,7 +9,7 @@ SIZE = 64
 
 
 def reshape_and_save(source_path: str, output_path: str):
-	img = cv2.imread(source_path)
+	img = cv2.imread(source_path)[:, :, 0]
 	scale = SIZE / min(img.shape[0], img.shape[1])
 	width = int(round(img.shape[1] * scale))
 	height = int(round(img.shape[0] * scale))

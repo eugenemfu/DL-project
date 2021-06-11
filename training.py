@@ -57,7 +57,7 @@ def evaluate(model, criterion, epoch, train_data, val_data, num_batches=None):
     return *loss_tv, *acc_tv
 
 
-model = nn.Sequential(
+model1 = nn.Sequential(
     nn.Conv2d(1, 32, kernel_size=3, padding=1),
     nn.ReLU(),
 
@@ -77,18 +77,20 @@ model = nn.Sequential(
     nn.Dropout2d(0.25),
 
     nn.Flatten(),
-    nn.Linear(9216, 1024),
+    nn.Linear(16384, 1024),
     nn.ReLU(),
     nn.Dropout(0.5),
     nn.Linear(1024, 7),
 ).to(device)
 
-model1 = nn.Sequential(
+model2 = nn.Sequential(
     models.resnet18(pretrained=True),
     nn.ReLU(),
     nn.Linear(1000, 7),
 ).to(device)
-model[0].conv1 = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+model2[0].conv1 = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+
+model = model1
 
 print(sum(p.numel() for p in model.parameters() if p.requires_grad))
 
@@ -103,7 +105,7 @@ EVAL_BATCHES = 100
 EVAL_STEP = 1
 SAVE_MODEL_IF_LOSS_IS_LESS_THAN = 1
 
-df = pd.read_csv('data/train.csv')
+df = pd.read_csv('data_resized/train.csv')
 train_df, val_df = train_test_split(df, test_size=VAL_SIZE)
 train_data = ImageDataset(train_df)
 val_data = ImageDataset(val_df)
