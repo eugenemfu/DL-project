@@ -22,7 +22,8 @@ The task is multiclassification. Our hypothesis is that accuracy of a simple CNN
 
 4. Analyze how parameters and architecture of GAN affect CNN model accuracy. 
 
-#Data overview
+
+# Data overview
 There are 7 image classes in the dataset that are encoded as following:
 
 **Emotion** | Angry | Disgust | Fear | Happy | Neutral | Sad | Surprise
