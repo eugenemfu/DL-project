@@ -6,6 +6,8 @@ __Theme__: Image augmentation using image generation with GAN to improve multicl
 
 __Dataset__: [FER13](https://datarepository.wolframcloud.com/resources/FER-2013) consists of 35,886 images. 
 
+![All emotions](plot_images/emotion_samples/image_samples.jpg)
+
 The task is multiclassification. Our hypothesis is that accuracy of a simple CNN model for image classification could be improved by generating more images and classes equalization.
 
 ### Plan: 
