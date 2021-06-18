@@ -3,8 +3,10 @@ from torch.utils.data import Dataset
 from torchvision.io import read_image
 
 class ImageDataset(Dataset):
-    def __init__(self, annotations_dataframe):
+    def __init__(self, annotations_dataframe, label=None):
         self.img_labels = annotations_dataframe
+        if not label is None:
+            self.img_labels = self.img_labels[self.img_labels['label'] == label]
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     def __len__(self):
