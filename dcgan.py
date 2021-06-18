@@ -260,7 +260,8 @@ for epoch in range(num_epochs):
             plt.show()
 
         # Check how the generator is doing by saving G's output on fixed_noise
-        if ((i == 0) and epoch >= 0) or ((epoch == num_epochs-1) and (i == len(dataloader)-1)):
+        if (i == 0 and epoch > 0) or \
+                ((epoch == num_epochs-1) and (i == len(dataloader)-1)):
             with torch.no_grad():
                 fake = netG(fixed_noise).detach().cpu()
                 plt.imshow(np.array(fake[0][0]), cmap='gray')
