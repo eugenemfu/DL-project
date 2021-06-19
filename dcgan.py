@@ -51,7 +51,7 @@ ngf = 64
 ndf = 64
 
 # Number of training epochs
-num_epochs = 20
+num_epochs = 15
 
 # Learning rate for optimizers
 lr = 0.0002
@@ -160,7 +160,7 @@ criterion = nn.BCELoss()
 fixed_noise = torch.randn(64, nz, 1, 1, device=device)
 real_label = 1.
 fake_label = 0.
-optimizerD = optim.Adam(netD.parameters(), lr=lr, betas=(beta1, 0.999))
+optimizerD = optim.Adam(netD.parameters(), lr=lr/10, betas=(beta1, 0.999))
 optimizerG = optim.Adam(netG.parameters(), lr=lr, betas=(beta1, 0.999))
 
 img_list = []
@@ -228,13 +228,6 @@ for epoch in range(num_epochs):
         G_losses.append(errG.item())
         D_losses.append(errD.item())
 
-        # Output training stats
-        if i == 0 and epoch > 0:
-            print('[%d/%d]  Loss_D: %.4f  Loss_G: %.4f'#  D(x): %.4f  D(G(z)): %.4f / %.4f'
-                  % (epoch, num_epochs, #i, len(dataloader),
-                     #errD.item(), errG.item(), D_x, D_G_z1, D_G_z2))
-                     np.mean(D_losses[-len(dataloader):]),
-                     np.mean(G_losses[-len(dataloader):])))
 
             # fig = go.Figure()
             # fig.add_trace(go.Scatter(x=np.arange(0, len(G_losses)),
@@ -250,27 +243,32 @@ for epoch in range(num_epochs):
             #                   yaxis_title='Loss')
             # fig.show()
 
-            plt.figure(figsize=(10, 5))
-            plt.title("Generator and Discriminator Loss During Training")
-            plt.plot(G_losses, label="G", )
-            plt.plot(D_losses, label="D")
-            plt.xlabel("iterations")
-            plt.ylabel("Loss")
-            plt.legend()
-            plt.show()
+
 
         # Check how the generator is doing by saving G's output on fixed_noise
-        if (i == 0 and epoch > 0) or \
-                ((epoch == num_epochs-1) and (i == len(dataloader)-1)):
+        if i == len(dataloader) - 1:
+            print('[%d/%d]  Loss_D: %.4f  Loss_G: %.4f'  # D(x): %.4f  D(G(z)): %.4f / %.4f'
+                  % (epoch + 1, num_epochs,  # i, len(dataloader),
+                     # errD.item(), errG.item(), D_x, D_G_z1, D_G_z2))
+                     np.mean(D_losses[-len(dataloader):]),
+                     np.mean(G_losses[-len(dataloader):])))
             with torch.no_grad():
                 fake = netG(fixed_noise).detach().cpu()
-                plt.imshow(np.array(fake[0][0]), cmap='gray')
-                plt.show()
             filename = f'generators/G_{int(time.time()) % 10000000}.pkl'
             torch.save(netG, filename)
             print(f'Saved generator as {filename}')
             img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
+            plt.imshow(np.transpose(img_list[-1], (1, 2, 0)))
+            plt.show()
+
+            if epoch == num_epochs - 1:
+                plt.figure(figsize=(10, 5))
+                plt.title("Generator and Discriminator Loss During Training")
+                plt.plot(G_losses, label="G", )
+                plt.plot(D_losses, label="D")
+                plt.xlabel("iterations")
+                plt.ylabel("Loss")
+                plt.legend()
+                plt.show()
 
         iters += 1
-
-
