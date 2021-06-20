@@ -22,7 +22,7 @@ from imagedataset import ImageDataset
 
 # Set random seed for reproducibility
 manualSeed = 999
-#manualSeed = random.randint(1, 10000) # use if you want new results
+manualSeed = random.randint(1, 10000) # use if you want new results
 print("Random Seed: ", manualSeed)
 random.seed(manualSeed)
 torch.manual_seed(manualSeed)
@@ -129,18 +129,22 @@ class Discriminator(nn.Module):
             # input is (nc) x 64 x 64
             nn.Conv2d(nc, ndf, 4, 2, 1, bias=False),
             nn.LeakyReLU(0.2, inplace=True),
+            nn.Dropout(0.5),
             # state size. (ndf) x 32 x 32
             nn.Conv2d(ndf, ndf * 2, 4, 2, 1, bias=False),
             nn.BatchNorm2d(ndf * 2),
             nn.LeakyReLU(0.2, inplace=True),
+            nn.Dropout(0.5),
             # state size. (ndf*2) x 16 x 16
             nn.Conv2d(ndf * 2, ndf * 4, 4, 2, 1, bias=False),
             nn.BatchNorm2d(ndf * 4),
             nn.LeakyReLU(0.2, inplace=True),
+            nn.Dropout(0.5),
             # state size. (ndf*4) x 8 x 8
             nn.Conv2d(ndf * 4, ndf * 8, 4, 2, 1, bias=False),
             nn.BatchNorm2d(ndf * 8),
             nn.LeakyReLU(0.2, inplace=True),
+            nn.Dropout(0.5),
             # state size. (ndf*8) x 4 x 4
             nn.Conv2d(ndf * 8, 1, 4, 1, 0, bias=False),
             nn.Sigmoid()
@@ -160,7 +164,7 @@ criterion = nn.BCELoss()
 fixed_noise = torch.randn(64, nz, 1, 1, device=device)
 real_label = 1.
 fake_label = 0.
-optimizerD = optim.Adam(netD.parameters(), lr=lr/10, betas=(beta1, 0.999))
+optimizerD = optim.Adam(netD.parameters(), lr=lr, betas=(beta1, 0.999))
 optimizerG = optim.Adam(netG.parameters(), lr=lr, betas=(beta1, 0.999))
 
 img_list = []
