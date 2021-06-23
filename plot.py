@@ -4,7 +4,7 @@ import pandas as pd
 from PIL import Image
 
 
-def plot_labels_dist(filename: str = 'data_resized/train.csv') -> None:
+def plot_labels_dist(filename: str = 'data64/train.csv') -> None:
     df = pd.read_csv(filename)
     labels = df['label']
     fig = go.Figure()
@@ -13,7 +13,7 @@ def plot_labels_dist(filename: str = 'data_resized/train.csv') -> None:
     fig.show()
 
 
-def plot_images(filename: str = 'data_resized/train.csv') -> None:
+def plot_images(filename: str = 'data64/train.csv') -> None:
     df = pd.read_csv(filename)
     dictionary_to_show = {'0': False, '1': False, '2': False, '3': False, '4': False, '5': False, '6': False}
     for j in range(7):

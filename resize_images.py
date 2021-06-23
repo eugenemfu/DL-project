@@ -38,4 +38,4 @@ def reshape_dataset(data_path, output_path):
 				print(f'\rReshaped {i} images', end='')
 	
 
-reshape_dataset('data', 'data_resized')
+reshape_dataset('data', 'data64')

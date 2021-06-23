@@ -14,6 +14,10 @@ import time
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+SEED = 42
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+
 
 def evaluate(model, criterion, epoch, train_data, val_data, num_batches=None):
     model.eval()
@@ -95,7 +99,7 @@ EVAL_BATCHES = 100
 EVAL_STEP = 1
 SAVE_MODEL_IF_LOSS_IS_LESS_THAN = 10
 
-df = pd.read_csv('data_resized/train.csv')
+df = pd.read_csv('data64/train.csv')
 train_df, val_df = train_test_split(df, test_size=VAL_SIZE)
 train_data = ImageDataset(train_df)
 val_data = ImageDataset(val_df)
@@ -115,7 +119,8 @@ for epoch in range(1, NUM_EPOCHS + 1):
     for batch in train_dataloader:
         i += 1
         print(f'\rEpoch: {epoch}/{NUM_EPOCHS},\tbatch: {i}/{num_batches}...', end='')
-        inputs = augment(batch['image'])
+        inputs = batch['image']
+        # inputs = augment(inputs)
         labels = batch['labels']
         outputs = model(inputs)
         loss = criterion(outputs, labels)

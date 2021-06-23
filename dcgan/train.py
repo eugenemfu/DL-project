@@ -47,7 +47,7 @@ def main():
     iterations = 0
 
     # Use resized images to create dataset
-    dataset = ImageDataset(pd.read_csv('data_resized/train.csv'), 1)
+    dataset = ImageDataset(pd.read_csv('data64/train.csv'), 1)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=GanArgument.BATCH_SIZE.value, shuffle=True)
 
     criterion = nn.BCELoss()

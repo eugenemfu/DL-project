@@ -18,7 +18,7 @@ print('Loading model...')
 model = torch.load('models/' + MODEL_NAME).to(device).eval()
 criterion = nn.CrossEntropyLoss().to(device)
 
-df = pd.read_csv('data_resized/test.csv')
+df = pd.read_csv('data64/test.csv')
 dataloader = DataLoader(ImageDataset(df), batch_size=BATCH_SIZE, shuffle=True)
 
 print('Evaluating...')

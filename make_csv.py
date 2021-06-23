@@ -29,5 +29,5 @@ def make_csv(data_path, csv_filename):
 	df.to_csv(csv_filename, index=False)
 	
 
-make_csv('data_resized/train', 'data_resized/train.csv')
-make_csv('data_resized/test', 'data_resized/test.csv')
+make_csv('data64/train', 'data64/train.csv')
+make_csv('data64/test', 'data64/test.csv')
