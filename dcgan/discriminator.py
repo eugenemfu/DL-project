@@ -1,9 +1,7 @@
 import torch.nn as nn
 import torch
-import torch.optim as optim
 
-from dcgan.utils import GanArgument, weights_init
-from dcgan.utils import device
+from dcgan.utils import GanArgument
 
 
 class Discriminator(nn.Module):
@@ -48,9 +46,3 @@ class Discriminator(nn.Module):
         return self.main(input_tensor)
 
 
-netD = Discriminator().main.to(device)
-netD.apply(weights_init)
-
-optimizer_discriminator = optim.Adam(netD.parameters(),
-                                     lr=GanArgument.LEARNING_RATE.value,
-                                     betas=(GanArgument.BETTA_1.value, GanArgument.BETTA_2.value))

@@ -37,11 +37,11 @@ class GanArgument(Enum):
     # Learning rate for optimizers
     LEARNING_RATE = 2e-4
     # Beta1 hyperparam for Adam optimizers
-    BETTA_1 = 0.5
+    BETA_1 = 0.5
     # Number of GPUs available. Use 0 for CPU mode.
     GPU = 0
     # Betta 2 hyperparam for Adam optimizers
-    BETTA_2 = 0.999
+    BETA_2 = 0.999
 
 
 device = torch.device("cuda:0" if (torch.cuda.is_available() and GanArgument.GPU.value > 0) else "cpu")

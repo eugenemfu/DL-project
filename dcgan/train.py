@@ -3,6 +3,7 @@ import time
 import random
 import torch.nn as nn
 import torch.utils.data
+import torch.optim as optim
 import torchvision.utils as vutils
 import numpy as np
 import pandas as pd
@@ -11,9 +12,9 @@ import sys
 
 
 from imagedataset import ImageDataset
-from dcgan.utils import GanArgument, device, plot_loss_with_plt
-from dcgan.generator import optimizer_generator, netG
-from dcgan.discriminator import optimizer_discriminator, netD
+from dcgan.utils import GanArgument, device, plot_loss_with_plt, weights_init
+from dcgan.generator import Generator
+from dcgan.discriminator import Discriminator
 
 sys.path.append("../../")
 
@@ -25,6 +26,18 @@ torch.manual_seed(SEED)
 
 
 def main():
+    netG = Generator().main.to(device)
+    netG.apply(weights_init)
+    optimizer_generator = optim.Adam(netG.parameters(),
+                                     lr=GanArgument.LEARNING_RATE.value,
+                                     betas=(GanArgument.BETA_1.value, GanArgument.BETA_2.value))
+
+    netD = Discriminator().main.to(device)
+    netD.apply(weights_init)
+    optimizer_discriminator = optim.Adam(netD.parameters(),
+                                         lr=GanArgument.LEARNING_RATE.value,
+                                         betas=(GanArgument.BETA_1.value, GanArgument.BETA_2.value))
+
     real_label = 1.
     fake_label = 0.
 

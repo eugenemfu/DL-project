@@ -1,8 +1,7 @@
 import torch.nn as nn
 import torch
-import torch.optim as optim
 
-from dcgan.utils import GanArgument, weights_init, device
+from dcgan.utils import GanArgument
 
 
 class Generator(nn.Module):
@@ -45,9 +44,3 @@ class Generator(nn.Module):
         return self.main(input_tensor)
 
 
-netG = Generator().main.to(device)
-netG.apply(weights_init)
-
-optimizer_generator = optim.Adam(netG.parameters(),
-                                 lr=GanArgument.LEARNING_RATE.value,
-                                 betas=(GanArgument.BETTA_1.value, GanArgument.BETTA_2.value))
