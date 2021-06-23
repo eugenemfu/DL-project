@@ -8,15 +8,13 @@ import torchvision.utils as vutils
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import sys
-
 
 from imagedataset import ImageDataset
 from dcgan.utils import GanArgument, device, plot_loss_with_plt, weights_init
 from dcgan.generator import Generator
 from dcgan.discriminator import Discriminator
+from augment import augment
 
-sys.path.append("../../")
 
 SEED = 999
 # SEED = random.randint(1, 10000) # use if you want new results
@@ -49,7 +47,7 @@ def main():
     iterations = 0
 
     # Use resized images to create dataset
-    dataset = ImageDataset(pd.read_csv('data_resized/train.csv'), 0)
+    dataset = ImageDataset(pd.read_csv('data_resized/train.csv'), 1)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=GanArgument.BATCH_SIZE.value, shuffle=True)
 
     criterion = nn.BCELoss()
@@ -61,10 +59,10 @@ def main():
         for i, data in enumerate(dataloader, 0):
             # Update D network: maximize log(D(x)) + log(1 - D(G(z))) and train with real data
             netD.zero_grad()
-            real_cpu = data['image'].to(device)
-            b_size = real_cpu.size(0)
+            real = augment(data['image'].to(device))
+            b_size = real.size(0)
             label = torch.full((b_size,), real_label, dtype=torch.float, device=device)
-            output = netD(real_cpu).view(-1)
+            output = netD(real).view(-1)
             errD_real = criterion(output, label)
             errD_real.backward()
             # D_x = output.mean().item()
@@ -72,7 +70,7 @@ def main():
             # Train with fake-data and generate batch of latent vectors
             noise = torch.randn(b_size, GanArgument.LATENT_SIZE.value, 1, 1, device=device)
             # Generate fake image batch with G
-            fake = netG(noise)
+            fake = augment(netG(noise))
             label.fill_(fake_label)
             # Classify all fake batch with D
             output = netD(fake.detach()).view(-1)

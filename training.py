@@ -8,6 +8,7 @@ from torchvision.io import read_image
 from torchvision import models
 from sklearn.model_selection import train_test_split
 from imagedataset import ImageDataset
+from augment import augment
 import time
 
 
@@ -114,7 +115,7 @@ for epoch in range(1, NUM_EPOCHS + 1):
     for batch in train_dataloader:
         i += 1
         print(f'\rEpoch: {epoch}/{NUM_EPOCHS},\tbatch: {i}/{num_batches}...', end='')
-        inputs = batch['image']
+        inputs = augment(batch['image'])
         labels = batch['labels']
         outputs = model(inputs)
         loss = criterion(outputs, labels)

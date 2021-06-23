@@ -36,7 +36,7 @@ class Generator(nn.Module):
             nn.ConvTranspose2d(GanArgument.G_FEATURE_MAP_SIZE.value,
                                GanArgument.CHANNELS.value, 4, 2, 1,
                                bias=False),
-            nn.Tanh()
+            nn.Sigmoid()
             # state size. (nc) x 64 x 64
         )
 
