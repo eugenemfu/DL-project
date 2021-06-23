@@ -33,7 +33,7 @@ class GanArgument(Enum):
     # # Size of feature maps in discriminator
     D_FEATURE_MAP_SIZE = 64
     # Number of training epochs
-    EPOCHS = 15
+    EPOCHS = 100
     # Learning rate for optimizers
     LEARNING_RATE = 2e-4
     # Beta1 hyperparam for Adam optimizers
