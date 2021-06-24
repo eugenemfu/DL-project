@@ -27,7 +27,8 @@ def make_csv(data_path, csv_filename):
 				label_list.append(label)
 	df = pd.DataFrame({'path': path_list, 'label': label_list})
 	df.to_csv(csv_filename, index=False)
-	
 
-make_csv('data64/train', 'data64/train.csv')
-make_csv('data64/test', 'data64/test.csv')
+
+folder = 'data64aug'
+make_csv(folder + '/train', folder + '/train.csv')
+make_csv(folder + '/test', folder + '/test.csv')
