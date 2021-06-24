@@ -21,7 +21,7 @@ def plot_images(filename: str = 'data64/train.csv') -> None:
                 dictionary_to_show[str(j)] = df.iloc[i, 0]
                 break
     images = list(dictionary_to_show.values())
-    # print(Image.open(images[6]).show())
+    # print(Image.open(plots[6]).show())
 
 
 import numpy as np

@@ -6,7 +6,7 @@ __Theme__: Image augmentation using image generation with GAN to improve multicl
 
 __Dataset__: [FER13](https://datarepository.wolframcloud.com/resources/FER-2013) consists of 35,886 images. 
 
-![All emotions](plot_images/emotion_samples/image_samples.jpg)
+![All emotions](resources/emotion_samples/image_samples.jpg)
 
 The task is multiclassification. Our hypothesis is that accuracy of a simple CNN model for image classification could be improved by generating more images and classes equalization.
 
@@ -32,17 +32,17 @@ There are 7 image classes in the dataset that are encoded as following:
 ---|---|---|---|---|---|---|---
 Id | 0| 1 | 2 | 3 | 4 | 5 | 6 
 
-![Angry](plot_images/emotion_samples/0.png)
-![Disgust](plot_images/emotion_samples/1.png)
-![Fear](plot_images/emotion_samples/2.png)
-![Happy](plot_images/emotion_samples/3.png)
-![Neutral](plot_images/emotion_samples/4.png)
-![Sad](plot_images/emotion_samples/5.png)
-![Surprise](plot_images/emotion_samples/6.png)
+![Angry](resources/emotion_samples/0.png)
+![Disgust](resources/emotion_samples/1.png)
+![Fear](resources/emotion_samples/2.png)
+![Happy](resources/emotion_samples/3.png)
+![Neutral](resources/emotion_samples/4.png)
+![Sad](resources/emotion_samples/5.png)
+![Surprise](resources/emotion_samples/6.png)
 
 Classes are unbalanced and distributed as following:
 
-![alt text](plot_images/emotion.png)
+![alt text](resources/plots/emotion.png)
 
 # How to preprocess dataset
 1. Download [`data.zip`](https://www.kaggle.com/msambare/fer2013?select=test), unarchive it and put all content in `data`
