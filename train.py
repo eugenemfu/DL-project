@@ -1,10 +1,8 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
-from torchvision.io import read_image
 from torchvision import models
 from sklearn.model_selection import train_test_split
 from imagedataset import ImageDataset
